@@ -1,0 +1,595 @@
+/* Base & Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+
+:root {
+    --primary-color: #83c5be; /* Light Teal/Aqua */
+    --secondary-color: #fff3b0; /* Pastel Yellow/Cream (Page Background) */
+    --accent-color: #a4133c; /* Wine Red/Bordeaux */
+    --navbar-bg-color: #e0fbfc; /* NEW: Very light Cyan/Azure for Navbar & Cards BG */
+    --text-dark: #333333;
+    --text-light: #ffffff; /* General white text, for contrasting backgrounds */
+}
+
+body {
+    background-color: var(--secondary-color);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* -------------------- ANIMATIONS -------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleUp {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+@keyframes bounceIn {
+    0%, 20%, 40%, 60%, 80%, 100% {
+        transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+    0% { opacity: 0; transform: scale3d(.3, .3, .3); }
+    20% { transform: scale3d(1.1, 1.1, 1.1); }
+    40% { transform: scale3d(.9, .9, .9); }
+    60% { opacity: 1; transform: scale3d(1.03, 1.03, 1.03); }
+    80% { transform: scale3d(.97, .97, .97); }
+    100% { opacity: 1; transform: scale3d(1, 1, 1); }
+}
+
+.fade-in { animation: fadeIn 1s ease-out forwards; }
+.slide-in-up { animation: slideInUp 1s ease-out forwards; opacity: 0; }
+.scale-up { animation: scaleUp 1s ease-out forwards; opacity: 0; }
+.bounce-in { animation: bounceIn 1s ease-out forwards; opacity: 0;}
+
+/* -------------------- Header & Navigation -------------------- */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: var(--navbar-bg-color); /* Updated navbar color */
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.logo {
+    font-size: 2.2em;
+    font-weight: 700;
+    color: var(--accent-color);
+    letter-spacing: 1px;
+}
+.logo a { text-decoration: none; color: inherit; }
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.main-nav ul li a {
+    text-decoration: none;
+    color: var(--text-dark);
+    margin: 0 10px;
+    padding: 8px 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.main-nav ul li a:hover,
+.main-nav ul li a.active {
+    color: var(--text-light); /* White text for contrast */
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.main-nav ul li a.active {
+    font-weight: 700;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.nav-icons { font-size: 1.3em; }
+.icon { margin-left: 18px; cursor: pointer; transition: transform 0.2s ease, color 0.3s ease; }
+.icon:hover { transform: scale(1.1); color: var(--accent-color); }
+.menu-toggle { display: none; font-size: 1.8em; cursor: pointer; color: var(--accent-color); }
+
+/* -------------------- Main Content (Shared) -------------------- */
+.main-content {
+    flex-grow: 1;
+    padding: 60px 5%;
+    background-color: var(--secondary-color);
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 0 20px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.page-header h2 {
+    font-size: 3em;
+    color: var(--accent-color);
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+.page-header p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+/* -------------------- Buttons (CTA) -------------------- */
+.cta-button {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: var(--accent-color);
+    color: var(--text-light); /* White text on accent buttons */
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.cta-button:hover {
+    background-color: #8c0f31;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* -------------------- Hero Section (Home Page Specific) -------------------- */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #a0d4cf 100%);
+    color: var(--text-light);
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 5%;
+    position: relative;
+    overflow: hidden;
+}
+.hero-section::before, .hero-section::after { /* Animated background circles */
+    content: ''; position: absolute; border-radius: 50%; filter: blur(40px);
+    background: rgba(255, 255, 255, 0.1); animation: float 15s infinite ease-in-out;
+}
+.hero-section::before { top: -50px; left: -50px; width: 200px; height: 200px; }
+.hero-section::after { bottom: -50px; right: -50px; width: 150px; height: 150px; animation-delay: 2s; }
+
+@keyframes float {
+    0% { transform: translate(0, 0); } 50% { transform: translate(20px, 20px); } 100% { transform: translate(0, 0); }
+}
+
+.hero-content h1 { font-size: 4em; margin-bottom: 20px; font-weight: 300; line-height: 1.1; }
+.hero-content p { font-size: 1.3em; margin-bottom: 40px; opacity: 0.9; }
+
+
+/* -------------------- Product Grid (Shared) -------------------- */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    padding: 30px 0;
+}
+
+.product-card {
+    background-color: var(--navbar-bg-color); /* Updated card background color */
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* To push button to bottom */
+}
+.product-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+.product-image {
+    height: 280px;
+    background-color: #e6f2f2; /* Light background for images */
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    color: var(--primary-color);
+    border-radius: 5px;
+    overflow: hidden; /* For actual image */
+}
+.product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Ensure image fits well */
+    transition: transform 0.3s ease;
+}
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+
+.product-card h3 {
+    margin-bottom: 12px;
+    font-size: 1.6em;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.product-card p {
+    margin-bottom: 25px;
+    font-size: 0.95em;
+    color: #555;
+    flex-grow: 1; /* Allow paragraph to take space */
+}
+
+.product-card button {
+    padding: 12px 25px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 4px;
+    font-weight: 600;
+    width: 100%; /* Make button full width */
+}
+
+.product-card button:hover {
+    background-color: #6fb2a9;
+    transform: translateY(-2px);
+}
+
+/* -------------------- Quiz CTA Section (Home Page Specific) -------------------- */
+.quiz-cta {
+    background-color: var(--accent-color);
+    color: var(--text-light);
+    padding: 100px 5%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.quiz-cta::before { /* Animated background pattern */
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 10%, transparent 11%), radial-gradient(circle, rgba(255,255,255,0.05) 10%, transparent 11%);
+    background-size: 40px 40px; background-position: 0 0, 20px 20px; animation: backgroundPan 30s linear infinite;
+}
+@keyframes backgroundPan { from { background-position: 0 0; } to { background-position: 400px 0; } }
+
+.quiz-cta h2 { font-size: 3em; margin-bottom: 15px; font-weight: 300; }
+.quiz-cta p { font-size: 1.2em; margin-bottom: 40px; }
+.secondary-cta {
+    background-color: var(--navbar-bg-color); /* Button with navbar color */
+    color: var(--accent-color);
+    border: 2px solid var(--navbar-bg-color);
+}
+.secondary-cta:hover {
+    background-color: #c1edef; /* Lighter shade of navbar color */
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+
+/* -------------------- Shop Page Specific Styles -------------------- */
+.filter-options {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.filter-options select {
+    padding: 10px 15px;
+    border: 1px solid var(--primary-color);
+    margin: 5px;
+    background-color: var(--navbar-bg-color);
+    border-radius: 4px;
+    color: var(--text-dark);
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.filter-options select:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.filter-options select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.3);
+}
+
+
+/* -------------------- Quiz Page Specific Styles -------------------- */
+.quiz-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: var(--navbar-bg-color); /* Quiz container uses navbar color */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.quiz-progress {
+    width: 100%;
+    height: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+.quiz-progress-bar {
+    height: 100%;
+    width: 20%; /* Example width, updated by JS */
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+.quiz-question {
+    font-size: 1.5em;
+    color: var(--accent-color);
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.quiz-option {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    padding: 15px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1em;
+    width: 100%;
+}
+.quiz-option:hover {
+    background-color: #6fb2a9;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.quiz-option.selected {
+    background-color: var(--accent-color);
+    color: var(--text-light);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-color);
+}
+.quiz-navigation {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.quiz-navigation button {
+    padding: 10px 25px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.quiz-navigation button:hover {
+    background-color: #6fb2a9;
+}
+.quiz-navigation button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.quiz-results {
+    text-align: center;
+    padding: 40px;
+    background-color: var(--navbar-bg-color);
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+.quiz-results h3 {
+    color: var(--accent-color);
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+.quiz-results p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+.quiz-results .cta-button {
+    margin-top: 20px;
+}
+
+
+/* -------------------- Science Page Specific Styles -------------------- */
+.science-blocks {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+.science-card {
+    background-color: var(--navbar-bg-color); /* Science cards use navbar color */
+    padding: 30px;
+    border-left: 5px solid var(--accent-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.science-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.science-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+.science-card p {
+    font-size: 1em;
+    color: #444;
+}
+
+/* -------------------- Contact Page Specific Styles -------------------- */
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--navbar-bg-color); /* Form background uses navbar color */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+.contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form select,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    background-color: var(--text-light); /* Input background white */
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.2);
+}
+.contact-info {
+    margin-top: 30px;
+    text-align: center;
+    padding: 30px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.contact-info p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+.contact-info strong {
+    font-weight: 700;
+}
+
+
+/* -------------------- Responsive Design (Mobile) -------------------- */
+@media (max-width: 768px) {
+    .main-nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--navbar-bg-color); /* Mobile menu uses navbar color */
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        padding: 10px 0;
+    }
+    .main-nav.active { display: flex; }
+    .main-nav ul { flex-direction: column; width: 100%; }
+    .main-nav ul li { margin: 5px 0; }
+    .main-nav ul li a { 
+        margin: 0 20px; 
+        padding: 10px; 
+        border-bottom: 1px solid #c8d8dc; /* Lighter border for mobile menu items */
+    }
+    .main-nav ul li:last-child a { border-bottom: none; }
+    .menu-toggle { display: block; order: 3; }
+
+    .hero-section { height: 70vh; }
+    .hero-content h1 { font-size: 2.8em; }
+    .hero-content p { font-size: 1.1em; }
+
+    .page-header h2 { font-size: 2.2em; }
+    .product-grid { grid-template-columns: 1fr; }
+
+    .quiz-container, .science-blocks, .contact-form {
+        padding: 20px;
+    }
+    .quiz-question { font-size: 1.2em; }
+    .quiz-options { gap: 10px; }
+    .quiz-option { padding: 12px 15px; font-size: 1em; }
+    .quiz-navigation { flex-direction: column; gap: 10px; }
+    .quiz-navigation button { width: 100%; }
+}
+
+/* Animazioni al caricamento per tutte le pagine */
+body > header,
+body > .main-content > .page-header,
+body > .main-content > section > h2,
+body > footer {
+    opacity: 0; /* Hidden initially for animation */
+}
+
+body > header { animation: fadeIn 1s ease-out forwards; }
+body > .main-content > .page-header { animation: slideInUp 1s ease-out 0.2s forwards; }
+body > .main-content > section > h2 { animation: slideInUp 1s ease-out 0.3s forwards; }
+body > footer { animation: fadeIn 1s ease-out 0.5s forwards; }
+
+
+/* Specific animations for Home Page */
+.hero-content h1 { animation: slideInUp 1s ease-out 0.4s forwards; opacity: 0; }
+.hero-content p { animation: slideInUp 1s ease-out 0.7s forwards; opacity: 0; }
+.hero-section .cta-button { animation: scaleUp 1s ease-out 1s forwards; opacity: 0; }
+
+.product-grid .product-card {
+    opacity: 0; /* Initially hidden */
+    animation: fadeIn 0.8s ease-out forwards;
+}
+/* Staggered animation for product cards */
+.product-grid .product-card:nth-child(1) { animation-delay: 0.8s; }
+.product-grid .product-card:nth-child(2) { animation-delay: 1.0s; }
+.product-grid .product-card:nth-child(3) { animation-delay: 1.2s; }
+.product-grid .product-card:nth-child(4) { animation-delay: 1.4s; }
+.product-grid .product-card:nth-child(5) { animation-delay: 1.6s; }
+.product-grid .product-card:nth-child(6) { animation-delay: 1.8s; }
+
+
+/* Specific animations for Quiz Page */
+.quiz-container { animation: bounceIn 1s ease-out 0.4s forwards; opacity: 0;}
+
+/* Specific animations for Science Page */
+.science-card {
+    opacity: 0; /* Initially hidden */
+    animation: slideInUp 1s ease-out forwards;
+}
+.science-card:nth-child(1) { animation-delay: 0.6s; }
+.science-card:nth-child(2) { animation-delay: 0.9s; }
+.science-card:nth-child(3) { animation-delay: 1.2s; }
+
+
+/* Specific animations for Contact Page */
+.contact-form { animation: slideInUp 1s ease-out 0.4s forwards; opacity: 0;}
+.contact-info { animation: slideInUp 1s ease-out 0.7s forwards; opacity: 0;}
